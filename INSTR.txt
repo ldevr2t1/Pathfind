@@ -1,0 +1,14 @@
+
+FOR MONGODB:
+
+Open a terminal and run
+> mongod
+
+EXTRA: To clear a database then just open another terminal
+and run 
+> mongo 
+> show databases
+> use [database name] 
+> db.dropDatabase()
+{you should get an ok}
+
