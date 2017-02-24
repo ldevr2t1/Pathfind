@@ -59,8 +59,7 @@ def uid_post(uid, body):
         return jsonify({"Status": 200, "Message": "Successfully posted"})
     else:
         return jsonify({"Status": 500, "Message": "Unexpected Error"})
-
-
+    
 
 def uid_put(uid, body):
     #this checks if incoming data is valid json
