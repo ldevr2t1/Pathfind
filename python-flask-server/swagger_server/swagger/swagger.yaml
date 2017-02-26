@@ -4,7 +4,8 @@ info:
   description: "API developed for the pathfinding algorithm"
   version: "1.0.9"
   title: "Pathfinding API"
-host: "port:8000"
+host: "ec2-52-41-229-1.us-west-2.compute.amazonaws.com:8080" 
+
 basePath: "/v1"
 schemes:
 - "https"

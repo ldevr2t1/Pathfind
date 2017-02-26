@@ -9,3 +9,4 @@ if __name__ == '__main__':
     app.app.json_encoder = JSONEncoder
     app.add_api('swagger.yaml', arguments={'title': 'API developed for the pathfinding algorithm'})
     app.run(host='ec2-52-41-229-1.us-west-2.compute.amazonaws.com', port=8080)
+
