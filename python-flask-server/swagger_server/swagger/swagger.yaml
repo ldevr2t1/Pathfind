@@ -1,0 +1,181 @@
+---
+swagger: "2.0"
+info:
+  description: "API developed for the pathfinding algorithm"
+  version: "1.0.9"
+  title: "Pathfinding API"
+host: "ec2-52-41-229-1.us-west-2.compute.amazonaws.com:8080" 
+basePath: "/v1"
+schemes:
+- "https"
+paths:
+  /:
+    get:
+      tags:
+      - "uid"
+      summary: "Returns the current versions information"
+      description: "Get all of the details of the current version"
+      operationId: "root_get"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters: []
+      responses:
+        200:
+          description: "Get current version details"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Generic_Object"
+      x-swagger-router-controller: "swagger_server.controllers.uid_controller"
+    post:
+      tags:
+      - "uid"
+      summary: "creates a new uid"
+      description: "return the new generated"
+      operationId: "root_post"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters: []
+      responses:
+        200:
+          description: "return new generated uid"
+          schema:
+            type: "integer"
+            format: "int64"
+      x-swagger-router-controller: "swagger_server.controllers.uid_controller"
+  /{uid}:
+    get:
+      tags:
+      - "uid"
+      summary: "get the particular uid for the version"
+      description: "Will return the current object(s) stored for the uid\n"
+      operationId: "uid_get"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - name: "uid"
+        in: "path"
+        description: "the UID"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "An array of objects for the uid/Version"
+          schema:
+            $ref: "#/definitions/uid_Info"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "swagger_server.controllers.uid_controller"
+    post:
+      tags:
+      - "uid"
+      summary: "creates a new uid"
+      description: "return the new generated uid"
+      operationId: "uid_post"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - name: "uid"
+        in: "path"
+        description: "the UID"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Information/object for the uid"
+        required: true
+        schema:
+          $ref: "#/definitions/Generic_Object"
+      responses:
+        200:
+          description: "return sucecss"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "swagger_server.controllers.uid_controller"
+    put:
+      tags:
+      - "uid"
+      summary: "update an existing uid"
+      description: "Will return the current object(s) stored for the uid\n"
+      operationId: "uid_put"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - name: "uid"
+        in: "path"
+        description: "the uid"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Information/object for the uid"
+        required: true
+        schema:
+          $ref: "#/definitions/Generic_Object"
+      responses:
+        200:
+          description: "Updated"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "swagger_server.controllers.uid_controller"
+    delete:
+      tags:
+      - "uid"
+      summary: "delete a uid"
+      description: "delete a uid\n"
+      operationId: "uid_delete"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - name: "uid"
+        in: "path"
+        description: "the UID"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "Deleted"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "swagger_server.controllers.uid_controller"
+definitions:
+  Generic_Object:
+    type: "object"
+  uid_Info:
+    type: "object"
+  Error:
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      message:
+        type: "string"
+      fields:
+        type: "string"
