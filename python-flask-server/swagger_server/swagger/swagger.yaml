@@ -3,10 +3,8 @@ swagger: "2.0"
 info:
   description: "API developed for the pathfinding algorithm"
   version: "1.0.9"
-  title: "Pathfinding API"
-
+  title: "Pathfinding Storage API"
 host: "localhost:8080"
-
 basePath: "/v1"
 schemes:
 - "https"
@@ -29,6 +27,10 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/Generic_Object"
+        500:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
       x-swagger-router-controller: "swagger_server.controllers.uid_controller"
     post:
       tags:
@@ -46,6 +48,10 @@ paths:
           schema:
             type: "integer"
             format: "int64"
+        500:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
       x-swagger-router-controller: "swagger_server.controllers.uid_controller"
   /{uid}:
     get:
@@ -69,10 +75,14 @@ paths:
         format: "int64"
       responses:
         200:
-          description: "An array of objects for the uid/Version"
+          description: "The data for the uid/Version"
           schema:
             $ref: "#/definitions/uid_Info"
-        default:
+        404:
+          description: "UID could not be found"
+          schema:
+            $ref: "#/definitions/Generic_Object"
+        500:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
@@ -80,8 +90,8 @@ paths:
     post:
       tags:
       - "uid"
-      summary: "creates a new uid"
-      description: "return the new generated uid"
+      summary: "update an existing uid"
+      description: "Will return the current object(s) stored for the uid\n"
       operationId: "uid_post"
       produces:
       - "application/json"
@@ -101,8 +111,14 @@ paths:
           $ref: "#/definitions/Generic_Object"
       responses:
         200:
-          description: "return sucecss"
-        default:
+          description: "return success"
+        400:
+          description: "Bad request - inavlid json"
+        404:
+          description: "UID could not be found"
+          schema:
+            $ref: "#/definitions/Generic_Object"
+        500:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
@@ -135,7 +151,13 @@ paths:
       responses:
         200:
           description: "Updated"
-        default:
+        400:
+          description: "Bad request - inavlid json"
+        404:
+          description: "UID could not be found"
+          schema:
+            $ref: "#/definitions/Generic_Object"
+        500:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
@@ -162,7 +184,7 @@ paths:
       responses:
         200:
           description: "Deleted"
-        default:
+        500:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
@@ -178,6 +200,4 @@ definitions:
         type: "integer"
         format: "int32"
       message:
-        type: "string"
-      fields:
         type: "string"

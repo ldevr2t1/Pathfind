@@ -18,10 +18,10 @@ REQUIRES = ["connexion"]
 setup(
     name=NAME,
     version=VERSION,
-    description="Pathfinding API",
+    description="Pathfinding Storage API",
     author_email="",
     url="",
-    keywords=["Swagger", "Pathfinding API"],
+    keywords=["Swagger", "Pathfinding Storage API"],
     install_requires=REQUIRES,
     packages=find_packages(),
     package_data={'': ['swagger/swagger.yaml']},

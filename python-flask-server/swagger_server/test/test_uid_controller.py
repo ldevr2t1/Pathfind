@@ -59,7 +59,7 @@ class TestUidController(BaseTestCase):
         """
         Test case for uid_post
 
-        creates a new uid
+        update an existing uid
         """
         body = GenericObject()
         response = self.client.open('/v1/{uid}'.format(uid=789),
