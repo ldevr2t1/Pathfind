@@ -57,7 +57,7 @@ def uid_delete(uid):
 def uid_get(uid):
 	#run a check to see if the uid exists
 	if(find_uid(uid) == False):
-			return get_status(404, "COULD NOT FIND")	
+			return get_status(404, "COULD NOT FIND"), status.HTTP_404_NOT_FOUND	
 	#if the uid doesn't exist then just go ahead return error status
 	ret_object = db.posts.find_one({"uid": str(uid)})
 	return jsonify(ret_object['body'])
@@ -65,12 +65,10 @@ def uid_get(uid):
 
 def uid_post(uid, body):
 	#this checks if incoming data is valid json
-	print()
-	print("body" + str(body))
 	if connexion.request.is_json:
 		print("inside connextion")
 		if(find_uid(uid) == False):
-			return get_status(404, "COULD NOT FIND")
+			return get_status(404, "COULD NOT FIND"), status.HTTP_404_NOT_FOUND
 		body = GenericObject.from_dict(connexion.request.get_json())
 		db.posts.find_one_and_update({"uid":str(uid)}, {"$set": {"body": str(body)}})
 	#need to write better messages to return for a success
@@ -83,7 +81,7 @@ def uid_put(uid, body):
 	#this checks if incoming data is valid json and for valid uid
 	if connexion.request.is_json:
 		if(find_uid(uid) == False):
-			return get_status(404, "COULD NOT FIND")
+			return get_status(404, "COULD NOT FIND"), status.HTTP_404_NOT_FOUND
 		body = GenericObject.from_dict(connexion.request.get_json())
 		db.posts.find_one_and_update({"uid":str(uid)}, {"$set": {"body": str(body)}})
 	#need to write better messages to return for a success
