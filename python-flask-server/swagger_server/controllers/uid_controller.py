@@ -9,7 +9,7 @@ from typing import List, Dict
 from six import iteritems
 from ..util import deserialize_date, deserialize_datetime
 from pymongo import MongoClient
-
+from flask.ext.api import status
 
 client = MongoClient()
 db = client.path_db
@@ -50,8 +50,8 @@ def uid_delete(uid):
 
 def uid_get(uid):
 	#run a check to see if the uid exists
-	if(not find_uid(uid)):
-		return get_status(404, "COULD NOT FIND")
+	if not find_uid(uid):
+		return get_status(404, "COULD NOT FIND"), status.HTTP_404_NOT_FOUND
 	#if the uid doesn't exist then just go ahead return error status
 	ret_object = db.posts.find_one({"uid": str(uid)})
 	return jsonify(ret_object['body'])
@@ -60,24 +60,24 @@ def uid_get(uid):
 def uid_post(uid, body):
 	#this checks if incoming data is valid json
 	if connexion.request.is_json:
-		if(find_uid(uid) == False):
-			return get_status(404, "COULD NOT FIND")
+		if not find_uid(uid):
+			return get_status(404, "COULD NOT FIND"), status.HTTP_404_NOT_FOUND
 		body = GenericObject.from_dict(connexion.request.get_json())
 		db.posts.find_one_and_update({"uid":str(uid)}, {"$set": {"body": str(body)}})
 	#need to write better messages to return for a success
 		return get_status(200, "Successfully POSTED")
 	else:
-		return get_status(500, "Unexpected ERROR")
+		return get_status(500, "Unexpected ERROR"), status.HTTP_500_INTERNAL_SERVER_ERROR
 	
 
 def uid_put(uid, body):
 	#this checks if incoming data is valid json and for valid uid
 	if connexion.request.is_json:
 		if(find_uid(uid) == False):
-			return get_status(404, "COULD NOT FIND")
+			return get_status(404, "COULD NOT FIND"), status.HTTP_404_NOT_FOUND
 		body = GenericObject.from_dict(connexion.request.get_json())
 		db.posts.find_one_and_update({"uid":str(uid)}, {"$set": {"body": str(body)}})
 	#need to write better messages to return for a success
 		return get_status(200, "Successfully PUT/UPDATED")
 	else:
-		return get_status(500, "Unexpected ERROR")
+		return get_status(500, "Unexpected ERROR"), status.HTTP_500_INTERNAL_SERVER_ERROR
