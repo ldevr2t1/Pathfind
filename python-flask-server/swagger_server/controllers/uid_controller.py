@@ -44,8 +44,10 @@ def root_post():
 
 
 def uid_delete(uid):
-	db.posts.delete_many({"uid": str(uid)})
-	return get_status(200, "Successfully Deleted")
+	if db.posts.delete_many({"uid": str(uid)}).deleted_count == 0:
+		return get_status(404, "NOT FOUND"), status.HTTP_404_NOT_FOUND
+	else:
+		return get_status(200, "Successfully Deleted")
 
 
 def uid_get(uid):
