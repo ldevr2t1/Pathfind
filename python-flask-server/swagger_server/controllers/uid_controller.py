@@ -1,6 +1,7 @@
 import connexion
 import json
 from flask import jsonify
+from flask.ext.api import status
 from swagger_server.models.error import Error
 from swagger_server.models.generic_object import GenericObject
 from swagger_server.models.uid_info import UidInfo
@@ -46,6 +47,9 @@ def root_post():
 
 
 def uid_delete(uid):
+	if find_uid(uid) == False:
+		content = {'please move along': 'nothing to see here'}
+		return jsonify(content), status.HTTP_404_NOT_FOUND
 	db.posts.delete_one({"uid": str(uid)})
 	return get_status(200, "Successfully Deleted")
 
