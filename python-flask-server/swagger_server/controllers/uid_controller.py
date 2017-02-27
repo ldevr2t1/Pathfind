@@ -59,10 +59,7 @@ def uid_get(uid):
 
 def uid_post(uid, body):
 	#this checks if incoming data is valid json
-	print()
-	print("body" + str(body))
 	if connexion.request.is_json:
-		print("inside connextion")
 		if(find_uid(uid) == False):
 			return get_status(404, "COULD NOT FIND")
 		body = GenericObject.from_dict(connexion.request.get_json())
