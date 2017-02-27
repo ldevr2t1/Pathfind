@@ -44,7 +44,7 @@ def root_post():
 
 
 def uid_delete(uid):
-	db.posts.delete_one({"uid": str(uid)})
+	db.posts.delete_many({"uid": str(uid)})
 	return get_status(200, "Successfully Deleted")
 
 
