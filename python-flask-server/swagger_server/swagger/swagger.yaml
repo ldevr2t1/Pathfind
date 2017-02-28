@@ -5,7 +5,7 @@ info:
     \ to obtain a UID and then post away using the UID"
   version: "1.0.9"
   title: "Pathfinding Storage API"
-host: "ec2-52-41-229-1.us-west-2.compute.amazonaws.com:8080"
+host: "localhost:8080"
 basePath: "/v1"
 schemes:
 - "https"
@@ -199,9 +199,9 @@ definitions:
     type: "object"
   pid_post:
     properties:
-	  uid:
-	    type: "integer"
-		format: "int32"
+      uid:
+        type: "integer"
+        format: "int32"
   Error:
     properties:
       code:
