@@ -51,8 +51,7 @@ paths:
         200:
           description: "return new generated uid"
           schema:
-            type: "integer"
-            format: "int64"
+            $ref: "#/definitions/pid_post"
         500:
           description: "Unexpected error"
           schema:
@@ -198,6 +197,11 @@ definitions:
     type: "object"
   uid_Info:
     type: "object"
+  pid_post:
+    properties:
+	  uid:
+	    type: "integer"
+		format: "int32"
   Error:
     properties:
       code:
