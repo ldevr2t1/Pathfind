@@ -4,7 +4,7 @@ info:
   description: "API developed for the pathfinding algorithm"
   version: "1.0.9"
   title: "Pathfinding Storage API"
-host: "localhost:8080"
+host: "ec2-52-41-229-1.us-west-2.compute.amazonaws.com:8080"
 basePath: "/v1"
 schemes:
 - "https"
