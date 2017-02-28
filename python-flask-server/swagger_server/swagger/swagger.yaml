@@ -1,7 +1,8 @@
 ---
 swagger: "2.0"
 info:
-  description: "API developed for the pathfinding algorithm"
+  description: "API developed for the pathfinding storage. To start, post to root\
+    \ to obtain a UID and then post away using the UID"
   version: "1.0.9"
   title: "Pathfinding Storage API"
 host: "ec2-52-41-229-1.us-west-2.compute.amazonaws.com:8080"
@@ -28,6 +29,10 @@ paths:
             items:
               $ref: "#/definitions/Generic_Object"
         500:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+        default:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/Error"
@@ -91,7 +96,8 @@ paths:
       tags:
       - "uid"
       summary: "update an existing uid"
-      description: "Will return the current object(s) stored for the uid\n"
+      description: "Will return the current object(s) stored for the uid.\nUsing a\
+        \ Release Consistency Model - The data is visible after a 200 success.\n"
       operationId: "uid_post"
       produces:
       - "application/json"
@@ -127,11 +133,9 @@ paths:
       tags:
       - "uid"
       summary: "update an existing uid"
-      description: "Will return the current object(s) stored for the uid\n"
+      description: "Will return the current object(s) stored for the uid. Using a\
+        \ Release Consistency Model - The data is visible after a 200 success."
       operationId: "uid_put"
-      consumes:
-      - "application/json"
-      - "application/xml"
       produces:
       - "application/json"
       - "application/xml"

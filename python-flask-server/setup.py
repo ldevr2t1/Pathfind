@@ -27,7 +27,7 @@ setup(
     package_data={'': ['swagger/swagger.yaml']},
     include_package_data=True,
     long_description="""\
-    API developed for the pathfinding algorithm
+    API developed for the pathfinding storage. To start, post to root to obtain a UID and then post away using the UID
     """
 )
 
