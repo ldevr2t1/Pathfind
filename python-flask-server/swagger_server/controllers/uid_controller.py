@@ -66,7 +66,7 @@ def uid_post(uid, body):
 		if not find_uid(uid):
 			return get_status(404, "COULD NOT FIND"), status.HTTP_404_NOT_FOUND
 		body = GenericObject.from_dict(connexion.request.get_json())
-		db.posts.find_one_and_update({"uid":str(uid)}, {"$set": {"body": str(body)}})
+		db.posts.find_one_and_update({"uid":str(uid)}, {"$set": {"body": body}})
 	#need to write better messages to return for a success
 		return get_status(200, "Successfully POSTED")
 	else:
@@ -79,7 +79,7 @@ def uid_put(uid, body):
 		if(find_uid(uid) == False):
 			return get_status(404, "COULD NOT FIND"), status.HTTP_404_NOT_FOUND
 		body = GenericObject.from_dict(connexion.request.get_json())
-		db.posts.find_one_and_update({"uid":str(uid)}, {"$set": {"body": str(body)}})
+		db.posts.find_one_and_update({"uid":str(uid)}, {"$set": {"body": body}})
 	#need to write better messages to return for a success
 		return get_status(200, "Successfully PUT/UPDATED")
 	else:
