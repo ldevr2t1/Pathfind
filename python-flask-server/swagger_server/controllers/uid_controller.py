@@ -20,7 +20,7 @@ def create_json(uid, body):
 	return jsonify({"uid":str(uid), "body":str(body)})
 
 def insert_json(uid, body):
-	db.posts.insert_one({"uid": str(uid), "body":str(body)})
+	db.posts.insert_one({"uid": str(uid), "body":body})
 	
 def find_uid(uid):
 	return db.posts.find({"uid": str(uid)}).count() != 0
