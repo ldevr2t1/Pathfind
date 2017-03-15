@@ -24,10 +24,6 @@ def insert_json(uid, body):
 	db.posts.insert_one({"uid": str(uid), "body":body})
 
 
-def find_uid(uid):
-	return db.posts.find({"uid": str(uid)}).count() != 0
-
-
 def get_status(status, message):
 	return jsonify({"Status": status, "Message": message})
 
@@ -55,11 +51,11 @@ def uid_delete(uid):
 
 
 def uid_get(uid):
+	ret_object = db.posts.find_one({"uid": str(uid)})
 	#run a check to see if the uid exists
-	if not find_uid(uid):
+	if ret_object is None:
 		return get_status(404, "COULD NOT FIND"), status.HTTP_404_NOT_FOUND
 	#if the uid doesn't exist then just go ahead return error status
-	ret_object = db.posts.find_one({"uid": str(uid)})
 	return jsonify(ret_object['body'])
 
 
