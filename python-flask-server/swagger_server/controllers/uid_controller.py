@@ -19,11 +19,14 @@ def create_json(uid, body):
 	#gotta check if the body is valid jsonc
 	return jsonify({"uid":str(uid), "body":str(body)})
 
+
 def insert_json(uid, body):
 	db.posts.insert_one({"uid": str(uid), "body":body})
-	
+
+
 def find_uid(uid):
 	return db.posts.find({"uid": str(uid)}).count() != 0
+
 
 def get_status(status, message):
 	return jsonify({"Status": status, "Message": message})
@@ -61,26 +64,16 @@ def uid_get(uid):
 
 
 def uid_post(uid, body):
-	#this checks if incoming data is valid json
-	if connexion.request.is_json:
-		if not find_uid(uid):
-			return get_status(404, "COULD NOT FIND"), status.HTTP_404_NOT_FOUND
-		body = GenericObject.from_dict(connexion.request.get_json())
-		db.posts.find_one_and_update({"uid":str(uid)}, {"$set": {"body": body}})
-	#need to write better messages to return for a success
-		return get_status(200, "Successfully POSTED")
-	else:
-		return get_status(500, "Unexpected ERROR"), status.HTTP_500_INTERNAL_SERVER_ERROR
-	
+	uid_put(uid, body)
+
 
 def uid_put(uid, body):
 	#this checks if incoming data is valid json and for valid uid
 	if connexion.request.is_json:
-		if(find_uid(uid) == False):
-			return get_status(404, "COULD NOT FIND"), status.HTTP_404_NOT_FOUND
 		body = GenericObject.from_dict(connexion.request.get_json())
-		db.posts.find_one_and_update({"uid":str(uid)}, {"$set": {"body": body}})
-	#need to write better messages to return for a success
-		return get_status(200, "Successfully PUT/UPDATED")
+		if db.posts.find_one_and_update({"uid":str(uid)}, {"$set": {"body": body}}) is None:
+			return get_status(404, "COULD NOT FIND"), status.HTTP_404_NOT_FOUND
+		#need to write better messages to return for a success
+		return get_status(200, "OK")
 	else:
-		return get_status(500, "Unexpected ERROR"), status.HTTP_500_INTERNAL_SERVER_ERROR
+		return get_status(500, "Invalid JSON"), status.HTTP_500_INTERNAL_SERVER_ERROR
