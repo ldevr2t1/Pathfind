@@ -63,11 +63,7 @@ def uid_get(uid):
 	return jsonify(ret_object['body'])
 
 
-def uid_post(uid, body):
-	uid_put(uid, body)
-
-
-def uid_put(uid, body):
+def post_and_put(uid, body):
 	#this checks if incoming data is valid json and for valid uid
 	if connexion.request.is_json:
 		body = GenericObject.from_dict(connexion.request.get_json())
@@ -77,3 +73,10 @@ def uid_put(uid, body):
 		return get_status(200, "OK")
 	else:
 		return get_status(500, "Invalid JSON"), status.HTTP_500_INTERNAL_SERVER_ERROR
+
+def uid_post(uid, body):
+	return post_and_put(uid, body)
+
+
+def uid_put(uid, body):
+	return post_and_put(uid, body)
